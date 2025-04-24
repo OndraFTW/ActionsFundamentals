@@ -11,12 +11,9 @@ on:
   workflow_dispatch:
     inputs:
           environment:
-            description: 'Environment typr'
-            type: choice
-            options:
-            - Production
-            - Test
-            - Load test
+            description: 'Environment type'
+            type: environment
+            required: true
             
 jobs:
   Build:
