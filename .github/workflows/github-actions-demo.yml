@@ -64,4 +64,5 @@ jobs:
       - run: |
           echo "Step 5 deploying..."
           sleep 10
+      - uses: actions/checkout@v3.3.0
       - run: bash ./hello.sh
