@@ -24,5 +24,43 @@ jobs:
           echo "ref ${{github.ref}}"
       - name: List files in the repository
         run: |
-            echo "The repository ${{ github.repository }} contains the following files:"
+            echo "The repository ${{ github.repository }} files:"
             tree
+  Test:
+    needs: Build
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: Test
+    steps:
+      - run: "echo Testing..."
+  Load-test:
+    needs: Build
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: Load test
+    steps:
+      - run: "echo Testing..."
+      - run: "sleep 15"
+  Production:
+    needs: [Test, Load-test]
+    if: github.event.inputs.environment == 'Production'
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://writeabout.net
+    steps:
+      - run: |
+          echo "Step 1 deploying..."
+          sleep 10
+      - run: |
+          echo "Step 2 deploying..."
+          sleep 10
+      - run: |
+          echo "Step 3 deploying..."
+          sleep 10
+      - run: |
+          echo "Step 4 deploying..."
+          sleep 10
+      - run: |
+          echo "Step 5 deploying..."
+          sleep 10
